@@ -1,0 +1,118 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>Binder View MTG Single Set</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/toastify.css">
+    <link rel="stylesheet" href="css/keyrune.css"/>
+    <link rel="stylesheet" href="css/cardLoader.css">
+    <link rel="stylesheet" href="css/setLoader.css">
+    <link rel="stylesheet" href="css/manipulators.css">
+
+    <style type="text/css">
+        .curPage {
+            background-color: rgb(131, 205, 118) !important;
+        }
+
+        .binderPageButton {
+            width: 40px;
+            height: 30px;
+            margin: 1px;
+        }
+        a, a:visited {
+            color: #a78abc;
+        }
+    </style>
+</head>
+<body>
+<div class="setBoxes"></div>
+<div class="binderLink"></div>
+<div id="controlBox" class="manipulatorsContainer">
+    <div id="dangerZoneControls"></div>
+    <div id="displayControls"></div>
+    <div id="sortControls" style="display: none;"></div>
+    <div id="filterControls" style="display: none;"></div>
+</div>
+
+<div class="break"></div>
+<div class="cardBoxes" style="width: 1000px">
+    LOADING
+</div>
+<img id="preloading_the_cardback" style="visibility: hidden" src="/img/cardback.jpg" alt=""/>
+
+<script src="js/main.js"></script>
+<script src="js/jquery-3.5.1.js"></script>
+<script src="js/jquery.ba-throttle-debounce.js"></script>
+<script src="js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/bindWithDelay.js"></script>
+<script src="js/toastify.js"></script>
+<script src="js/js.cookie.js"></script>
+<script src="js/browserUser.js"></script>
+<script src="js/loggedInUser.js"></script>
+<script src="js/sorting.js"></script>
+<script src="js/filtering.js"></script>
+<script src="js/loaders.js"></script>
+<script src="js/displays.js"></script>
+<script src="js/itemCreation.js"></script>
+<script src="js/filterEventRegistration.js"></script>
+<script src="js/sorterEventRegistration.js"></script>
+<script src="js/manipulations.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        always()
+
+        globals.cards.selector = ".cardBoxes"
+        globals.manipulations.selector = ".manipulatorsContainer"
+        globals.manipulations.sort.selector = "#sortControls"
+        globals.manipulations.filter.selector = "#filterControls"
+        globals.manipulations.filter.hideCount = true
+        globals.manipulations.display.selector = "#displayControls"
+        globals.manipulations.dangerZone.selector = "#dangerZoneControls"
+
+        let primarySetCode = browserCode();
+        let setDisplay = singleSetDisplay.newDisplay(primarySetCode, browserUser)
+
+        let cardFilter = cardFilterClosure()
+        let cardDisplay = binderSetCardDisplay.newDisplay(primarySetCode, cardFilter)
+        let cardSortingActions = cardSorterEventRegistration(cardDisplay)
+
+        let config = manipulationsConfiguration(globals.manipulations.sort.defaults)
+        config.sort.incAlpha().incCardNumber(true)//.showOrder(true)
+        config.filter.asBinder()
+
+        if (!!browserUser.userId() && !!loggedInUser.localUserId()) {
+            config.dangerZone.incMassActions("Danger Zone")
+        }
+
+        manipulatorHelper(config,
+            (a, b) => cardSortingActions.sorters(a, b),
+            a => filterEventRegistration(cardFilter, cardDisplay).filters(a),
+            a => dangerZoneEventRegistration.register(a),
+            a => displayEventRegistration.register(a)
+        )
+
+        cardDisplay.show()
+        setDisplay.show()
+
+        $(".binderLink").html(`<a href="/set?setCode=${browserCode()}${browserUser.userIdUrlQuery("&")}">View As Set</a>`)
+    })
+
+
+</script>
+</body>
+
+</html>

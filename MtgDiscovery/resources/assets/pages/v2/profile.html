@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MTG Discovery</title>
+
+    <!-- --- Common to all pages --- -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/componentFooter.css">
+    <link rel="stylesheet" href="css/componentMenu.css">
+
+    <!--** For This Page --- -->
+
+    <!-- Local -->
+    <style>
+        .profileContent {
+            width: 30%;
+            margin: auto;
+            text-align: left;
+            padding-bottom: 100px
+        }
+    </style>
+</head>
+<body>
+<!-- Menu -->
+<div class="menuBox"></div>
+
+<!-- Page Specific -->
+<div class="profileContent">
+    <div style="display:block; margin: 50px;"></div>
+    <p><h1>This is the profile page</h1></p>
+    <p>Not very exciting. There's not much of a profile.</p>
+    <p>There's nothing to do here... yet.</p>
+    <br/>
+    <br/>
+    <div>
+        <p>Here's a simple link you can share to your collection. It'll translate to the ugly one.</p>
+        <a id="niceLink"></a>
+    </div>
+    <div>
+        <p>Or the direct ugly one</p>
+        <a id="yourLink"></a>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footerBox"></div>
+
+<!-- scripts -->
+<!-- Third Party -->
+<script src="js/jquery.min.js"></script>
+<script src="js/cookie.js"></script>
+<script src="js/String.js"></script>
+<script src="js/toastify.js"></script>
+
+<!-- No Dependencies -->
+<script src="js/env.js"></script>
+<script src="js/base.js"></script>
+<script src="js/css.js"></script>
+<script src="js/templatingCommon.js"></script>
+<script src="js/urlInfo.js"></script>
+<script src="js/paths.js"></script>
+
+<!-- Minimal Dependencies -->
+<script src="js/i18n.js"></script>
+<script src="js/user.js"></script>
+<script src="js/api.js"></script>
+<script src="js/templatingViewControls.js"></script>
+
+<!-- Common to all pages -->
+<script src="js/componentMenu.js"></script>
+<script src="js/componentFooter.js"></script>
+<script src="js/componentSetBox.js"></script>
+
+<!-- --- For This Page --- -->
+
+<!-- Local -->
+<script>
+
+    $(document).ready(async function () {
+        if (user.active.isNotLoggedIn()) window.location.replace("/" + paths.signIn);
+
+        let menu = menuHtml.load("menuBox")
+        let footer = footerHtml.load("footerBox")
+        document.title = i18n.get(i18n.keys.page.title.prefix + urlInfo.path.lastSegment)
+
+        await Promise.all([menu, footer])
+
+        let domain = window.location.hostname
+        let port = domain.toLowerCase() === "localhost" ? ":8080" : ""
+        let url = `${window.location.protocol}//${domain}${port}/user/${user.active.displayName()}`;
+        let niceLink = $("#niceLink");
+        niceLink.html(url)
+        niceLink.attr("href", url)
+        url = `${window.location.protocol}//${domain}${port}/${paths.sets}${urlInfo.ctor.incParamStart(user.active.userId())}`;
+        let yourLink = $("#yourLink");
+        yourLink.html(url)
+        yourLink.attr("href", url)
+    })
+</script>
+</body>
+</html>

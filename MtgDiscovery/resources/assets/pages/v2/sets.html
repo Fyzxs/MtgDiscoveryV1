@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Sets</title>
+
+    <!-- --- Common to all pages --- -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/componentFooter.css">
+    <link rel="stylesheet" href="css/componentMenu.css">
+
+    <!-- --- For This Page --- -->
+    <link rel="stylesheet" href="css/componentSetBox.css">
+    <link rel="stylesheet" href="css/componentViewControl.css">
+    <link rel="stylesheet" href="css/componentSortControls.css">
+    <link rel="stylesheet" href="css/componentFilterControls.css">
+    <link rel="stylesheet" href="css/componentSystemSummary.css">
+    <link rel="stylesheet" href="css/progressBar.css">
+
+    <!-- Local -->
+    <style>
+        .setCompleted{
+            background-color: #0e3c05;
+        }
+        .setToBinderify{
+            background-color: #210326;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Replaced Controls -->
+<div class="menuBox"></div>
+<div class="systemBox"></div>
+<div class="controlBox"></div>
+<div class="allSetsContainer setContainer">
+    <div class="setsBox">
+        <div style="margin: 15% auto;width: 10%;justify-content: center;display: grid;">
+            <img src="/img/preloader.gif">
+        </div>
+    </div>
+</div>
+<div class="footerBox"></div>
+
+<!-- ---  Common to all pages --- -->
+<!-- Third Party -->
+<script src="js/jquery.min.js"></script>
+<script src="js/cookie.js"></script>
+<script src="js/String.js"></script>
+
+<!-- No Dependencies -->
+<script src="js/env.js"></script>
+<script src="js/base.js"></script>
+<script src="js/css.js"></script>
+<script src="js/templatingCommon.js"></script>
+<script src="js/urlInfo.js"></script>
+<script src="js/paths.js"></script>
+
+<!-- Minimal Dependencies -->
+<script src="js/i18n.js"></script>
+<script src="js/user.js"></script>
+<script src="js/api.js"></script>
+<script src="js/templatingViewControls.js"></script>
+
+<!-- Common to all pages -->
+<script src="js/componentMenu.js"></script>
+<script src="js/componentFooter.js"></script>
+<script src="js/componentSetBox.js"></script>
+
+<!-- --- For This Page --- -->
+<script src="js/componentSummary.js"></script>
+<script src="js/componentDangerZone.js"></script>
+<script src="js/componentSortControls.js"></script>
+<script src="js/componentFilterControls.js"></script>
+<script src="js/componentViewControls.js"></script>
+
+
+<!-- Local -->
+<script>
+   $(document).ready(async function () {
+       let menu = menuHtml.load("menuBox")
+       let footer = footerHtml.load("footerBox")
+       document.title = i18n.get(i18n.keys.page.title.prefix + urlInfo.path.lastSegment)
+
+       let system = systemSummaryHtml.load("systemBox")
+
+       setControlsHtml.initSort().incAlpha().incRelease(true).incSetSize().incSetPercent().incCardsCollected()
+       setControlsHtml.initFilter().incCollected().incText()
+       let controls = setControlsHtml.load("controlBox")
+
+       let sets = allSetBoxesHtml.load("setsBox", {onSuccess: setControlsHtml.apply});
+
+       await Promise.all([menu, footer, system, sets, controls])
+   })
+
+</script>
+</body>
+</html>

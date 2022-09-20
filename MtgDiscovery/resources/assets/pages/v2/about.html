@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MTG Discovery</title>
+
+    <!-- --- Common to all pages --- -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/componentFooter.css">
+    <link rel="stylesheet" href="css/componentMenu.css">
+
+    <!--** For This Page --- -->
+
+    <!-- Local -->
+    <style>
+        .aboutContent {
+            width: 30%;
+            margin: auto;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<!-- Menu -->
+<div class="menuBox"></div>
+
+<!-- Page Specific -->
+
+
+<div class="aboutContent">
+    <p><h1>About This</h1></p>
+    <p>I've been collecting Magic: The Gathering cards since 1994. I've tried a dozen different ways to track my collection.</p>
+    <p>None have worked for me.</p>
+    <p>This site is built with the entire of providing /me/ with a smooth way to enter and track my collection.</p>
+    <p>You can use it too.</p>
+    <p>I'll even look into adding features you'd like.</p>
+    <p>There are, and will probably always be, limitations based on how /I/ use the site. This is, and I recognize, an unfortunate reality of the intent of this site - For Me.</p>
+    <p>It's a hack job with core functionality implemented in 3 days. Treat it as such.</p>
+    <br/>
+    <br/>
+    <p>Given all that, I hope you can find some use in it.</p>
+    <p>I find it AMAZING, not because I built it; it's given me insight into MTG cards and sets that I had NO idea about. This has OPENED a world of MTG cards I was blind to... SO HAPPY!!!!</p>
+    <p>It is how I fluidly interact with MTG. That's the whole point of the site.</p>
+    <p>Not the original goal... no no. The original goal was to practice Kotlin for a new job. It became mostly javascript.
+        I'll accept that though for the joy I'm getting using this site.</p>
+    <br/><br/>
+    <p><h1>Couldn't Do Without</h1></p>
+    <p><a href="https://mtgjson.com/">MTGJSON</a> is the reason this exists. They've done the data work that I've built on top of.</p>
+</div>
+
+<!-- Footer -->
+<div class="footerBox"></div>
+
+<!-- scripts -->
+<!-- Third Party -->
+<script src="js/jquery.min.js"></script>
+<script src="js/cookie.js"></script>
+<script src="js/String.js"></script>
+<script src="js/toastify.js"></script>
+
+<!-- No Dependencies -->
+<script src="js/env.js"></script>
+<script src="js/base.js"></script>
+<script src="js/css.js"></script>
+<script src="js/templatingCommon.js"></script>
+<script src="js/urlInfo.js"></script>
+<script src="js/paths.js"></script>
+
+<!-- Minimal Dependencies -->
+<script src="js/i18n.js"></script>
+<script src="js/user.js"></script>
+<script src="js/api.js"></script>
+<script src="js/templatingViewControls.js"></script>
+
+<!-- Common to all pages -->
+<script src="js/componentMenu.js"></script>
+<script src="js/componentFooter.js"></script>
+<script src="js/componentSetBox.js"></script>
+
+<!-- --- For This Page --- -->
+
+<!-- Local -->
+<script>
+
+    $(document).ready(async function () {
+        let menu = menuHtml.load("menuBox")
+        let footer = footerHtml.load("footerBox")
+        document.title = i18n.get(i18n.keys.page.title.prefix + urlInfo.path.lastSegment)
+
+        await Promise.all([menu, footer])
+    })
+</script>
+</body>
+</html>

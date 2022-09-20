@@ -1,0 +1,41 @@
+.alwaysMenu {
+    display: inline;
+    position: relative;
+    left: 0;
+}
+
+.optionalMenu {
+    display: inline;
+    position: relative;
+    right: 0;
+}
+
+.menuItem{
+    display: inline;
+    padding-right: 20px;
+}
+
+.menuContainer {
+    z-index: 999;
+    background-color: black;
+    -webkit-box-shadow: 0 0 100px 0 #b799c3;
+    -moz-box-shadow: 0 0 100px 0 #b799c3;
+    box-shadow: 0 0 100px 0 #b799c3;
+    border-bottom: #a900ff 1px solid;
+    padding-top: 1px;
+}
+
+.menuContent {
+    flex-wrap: wrap;
+    display:flex;
+    justify-content:space-between;
+    width: 40%;
+    min-width: 506px;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.menuPosition {
+    position: sticky;
+    top: 0;
+}

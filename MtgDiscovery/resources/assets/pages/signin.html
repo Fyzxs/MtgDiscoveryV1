@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="css/registration.css">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+    </style>
+</head>
+<body>
+<span id="postHead"></span>
+<div id="inProgress" class="modal">
+    <div class="modal-content">
+        <span class="modalMessage"><img src="img/preloader.gif" alt="magic icon loader"></span>
+    </div>
+</div>
+
+<div class="container">
+    <h1>Sign In</h1>
+
+    <label for="displayName"><b>Display Name</b></label>
+    <input type="text" placeholder="enter display name" name="displayName" id="displayName" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="enter password" name="psw" id="psw" required>
+
+    <button id="formSubmission" type="submit" class="registerbtn">Sign In</button>
+</div>
+
+<div id="preFoot"> </div>
+<script src="js/jquery-3.5.1.js"></script>
+<script src="js/js.cookie.js"></script>
+<script src="js/main.js"></script>
+<script src="js/loggedInUser.js"></script>
+<script>
+    $(document).ready(function () {
+        always()
+
+        function theWork() {
+            let data = {}
+            data.user = {}
+            data.user.displayName = $("#displayName").val()
+            data.user.password = $("#psw").val()
+            if (data.user.password === "" || data.user.displayName === "") {
+                alert("Please fill in all fields")
+                return
+            }
+
+            let trigger = $("#inProgress")
+            trigger.show()
+            $.ajax
+            ({
+                type: "POST",
+                url: "/api/v1/users/login",
+                dataType: 'json',
+                data: JSON.stringify(data),
+                success: function (data) {
+                    Cookies.set('token', data.user.token)
+                    Cookies.set('uuid', data.user.uuid)
+                    Cookies.set('displayName', data.user.displayName)
+                    window.location.replace("/profile");
+                }
+            })
+                .fail(function (data) {
+                    switch(data.status){
+                        case 401:
+                                alert(data.responseText)
+                                break;
+                        default:
+                            alert("Unknown Failure:" + data.status)
+                    }
+                })
+                .always(function () {
+                    setTimeout(function () {
+                        trigger.hide()
+                    }, 250);
+                });
+        }
+
+        $("#formSubmission").click(theWork);
+        $("#psw").keyup(function (e) {
+            if (e.keyCode === 13) {
+                theWork()
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

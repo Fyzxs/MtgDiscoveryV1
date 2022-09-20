@@ -1,0 +1,94 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>MTG Parent Set</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/toastify.css">
+    <link rel="stylesheet" href="css/keyrune.css"/>
+    <link rel="stylesheet" href="css/cardLoader.css">
+    <link rel="stylesheet" href="css/manipulators.css">
+    <link rel="stylesheet" href="css/setLoader.css">
+
+</head>
+
+<body>
+
+<div class="clear"></div>
+<div class="clear"></div>
+<div class="setBoxes"></div>
+<div class="clear"></div>
+
+<div id="controlBox" class="manipulatorsContainer">
+    <div id="dangerZoneControls"></div>
+    <div id="displayControls"></div>
+    <div id="sortControls" style="display: none;"></div>
+    <div id="filterControls" style="display: none;"></div>
+</div>
+<div class="cardBoxes">
+    LOADING
+</div>
+<img id="preloading_the_cardback" style="visibility: hidden" src="/img/cardback.jpg">
+
+<script src="js/jquery-3.5.1.js"></script>
+<script src="js/flip.js"></script>
+<script src="js/jquery.ba-throttle-debounce.js"></script>
+<script src="js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/main.js"></script>
+<script src="js/toastify.js"></script>
+<script src="js/js.cookie.js"></script>
+<script src="js/browserUser.js"></script>
+<script src="js/loggedInUser.js"></script>
+<script src="js/sorting.js"></script>
+<script src="js/filtering.js"></script>
+<script src="js/loaders.js"></script>
+<script src="js/displays.js"></script>
+<script src="js/itemCreation.js"></script>
+<script src="js/filterEventRegistration.js"></script>
+<script src="js/sorterEventRegistration.js"></script>
+<script src="js/manipulations.js"></script>
+
+<script>
+    $(document).ready(function () {
+        always()
+
+        globals.cards.selector = ".cardBoxes"
+        globals.manipulations.selector = ".manipulatorsContainer"
+        globals.manipulations.sort.selector = "#sortControls"
+        globals.manipulations.filter.selector = "#filterControls"
+        globals.manipulations.display.selector = "#displayControls"
+        globals.manipulations.dangerZone.selector = "#dangerZoneControls"
+
+        let config = manipulationsConfiguration(globals.manipulations.sort.defaults)
+        let primarySetCode = browserCode()
+        let setDisplay = parentSetDisplay.newDisplay(primarySetCode)
+
+        let cardFilter = cardFilterClosure()
+        let cardDisplay = parentSetCardDisplay.newDisplay(primarySetCode, cardFilter)
+        let cardSortingActions = cardSorterEventRegistration(cardDisplay)
+
+        config.sort.incAlpha(true).incCardNumber().showOrder()
+        config.displays.incCardSize()
+
+        let filterConfig = config.filter.incRarity().incTypes().incFoil().incPreviewSets()
+        if(browserUser.userExists()){
+            filterConfig.incCount()
+        }
+        filterConfig.incText("Card Name :")
+
+        manipulatorHelper(config,
+            (a, b) => cardSortingActions.sorters(a, b),
+            a => filterEventRegistration(cardFilter, cardDisplay).filters(a)
+            , function (){}
+            , a => displayEventRegistration.register(a))
+
+        cardDisplay.show()
+        setDisplay.show()
+    })
+</script>
+</body>
+
+</html>

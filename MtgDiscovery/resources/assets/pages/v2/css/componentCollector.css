@@ -1,0 +1,48 @@
+
+.collectorInfo {
+    display: grid;
+    justify-content: center;
+    padding-top: 5px;
+}
+
+.fourCount {
+    width: 40px;
+    display: inline-block;
+}
+
+.fourCountRight {
+    padding-right: 5px;
+}
+
+.colorRowBorder {
+    border-bottom-color: #73a5ff;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.collectorInfoRarity {
+    display: inline-block;
+    width: 90px;
+    text-align: right;
+}
+
+.collectorInfoPercent {
+    display: inline-block;
+    width: 160px;
+    text-align: right;
+}
+
+.collectorInfoCost {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+
+.collectorInfoPercentPercent {
+    display: inline;
+}
+
+.collectorInfoPercentRatio {
+    display: inline-block;
+    width: 100px;
+}

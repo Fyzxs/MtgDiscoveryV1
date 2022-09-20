@@ -1,0 +1,12 @@
+
+.footerPosition {
+    position: fixed;
+    bottom: 0;
+    background-color: black;
+    border-top: #a900ff 1px solid;
+}
+
+.footerContainer{
+    width: 100%;
+    text-align: center;
+}

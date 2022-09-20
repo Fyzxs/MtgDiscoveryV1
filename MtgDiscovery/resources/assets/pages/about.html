@@ -1,0 +1,91 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/toastify.css">
+    <link rel="stylesheet" href="css/keyrune.css"/>
+    <link rel="stylesheet" href="css/cardLoader.css">
+    <link rel="stylesheet" href="css/setLoader.css">
+    <link rel="stylesheet" href="css/manipulators.css">
+    <link rel="stylesheet" href="css/setSummary.css">
+    <link rel="stylesheet" href="css/registration.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <style>
+    </style>
+</head>
+
+<body>
+
+
+<div class="aboutContent">
+    <p><h1>About This</h1></p>
+    <p>I've been collecting Magic: The Gathering cards since 1994. I've tried a dozen different ways to track my collection.</p>
+    <p>None have worked for me.</p>
+    <p>This site is built with the entire of providing /me/ with a smooth way to enter and track my collection.</p>
+    <p>You can use it too.</p>
+    <p>I'll even look into adding features you'd like.</p>
+    <p>There are, and will probably always be, limitations based on how /I/ use the site. This is, and I recognize, an unfortunate reality of the intent of this site - For Me.</p>
+    <p>It's a hack job with core functionality implemented in 3 days. Treat it as such.</p>
+    <br/>
+    <br/>
+    <p>Given all that, I hope you can find some use in it.</p>
+    <p>I find it AMAZING, not because I built it; it's given me insight into MTG cards and sets that I had NO idea about. This has OPENED a world of MTG cards I was blind to... SO HAPPY!!!!</p>
+    <p>It is how I fluidly interact with MTG. That's the whole point of the site.</p>
+    <p>Not the original goal... no no. The original goal was to practice Kotlin for a new job. It became mostly javascript.
+    I'll accept that though for the joy I'm getting using this site.</p>
+    <br/><br/>
+    <p><h1>Couldn't Do Without</h1></p>
+    <p><a href="https://mtgjson.com/">MTGJSON</a> is the reason this exists. They've done the data work that I've built on top of.</p>
+    </br>
+
+    <p><h1>How To Use</h1></p>
+    <p><h3>Update Collection</h3></p>
+    <p><strong>Add Card(s)</strong></p>
+    <p><strong>Remove Card(s)</strong></p>
+    <p><h3>Navigate Collection</h3></p>
+    <p><strong>Next Card</strong></p>
+    <p><strong>Previous Card</strong></p>
+    <p><strong>Next Row</strong></p>
+    <p><strong>Previous Row</strong></p>
+    <p><h3>Controls</h3></p>
+    <p><h3>Pages</h3></p>
+    <p><strong>Sets</strong></p>
+    <p><strong>Your Collection</strong></p>
+    <p><strong>Set Cards</strong></p>
+    <p><strong>Binder View</strong></p>
+    <p><strong>Parent Set</strong></p>
+    <p><strong>Artist Cards</strong></p>
+    <p><strong>Card Printings</strong></p>
+</div>
+<script src="js/jquery-3.5.1.js"></script>
+<script src="js/jquery.ba-throttle-debounce.js"></script>
+<script src="js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/bindWithDelay.js"></script>
+<script src="js/main.js"></script>
+<script src="js/toastify.js"></script>
+<script src="js/js.cookie.js"></script>
+<script src="js/browserUser.js"></script>
+<script src="js/loggedInUser.js"></script>
+<script src="js/sorting.js"></script>
+<script src="js/filtering.js"></script>
+<script src="js/loaders.js"></script>
+<script src="js/displays.js"></script>
+<script src="js/itemCreation.js"></script>
+<script src="js/filterEventRegistration.js"></script>
+<script src="js/sorterEventRegistration.js"></script>
+<script src="js/manipulations.js"></script>
+<script>
+    $(document).ready(function () {
+        if (!loggedInUser.localAuthn()) window.location.replace("/signin");
+        always()
+    });
+</script>
+</body>
+
+</html>

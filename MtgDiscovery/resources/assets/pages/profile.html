@@ -1,0 +1,68 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/toastify.css">
+    <link rel="stylesheet" href="css/keyrune.css"/>
+    <link rel="stylesheet" href="css/cardLoader.css">
+    <link rel="stylesheet" href="css/setLoader.css">
+    <link rel="stylesheet" href="css/manipulators.css">
+    <link rel="stylesheet" href="css/setSummary.css">
+    <link rel="stylesheet" href="css/registration.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <style>
+    </style>
+</head>
+
+<body>
+
+<div class="profileContent">
+    <div style="display:block; margin: 50px;"></div>
+    <p><h1>This is the profile page</h1></p>
+    <p>Not very exciting. There's not much of a profile.</p>
+    <p>There's nothing to do here... yet.</p>
+    <br/>
+    <br/>
+    <div>
+        <p>Here's a simple link you can share to your collection. It'll translate to the ugly one.</p>
+        <a id="yourLink"></a>
+    </div>
+</div>
+<script src="js/jquery-3.5.1.js"></script>
+<script src="js/jquery.ba-throttle-debounce.js"></script>
+<script src="js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/bindWithDelay.js"></script>
+<script src="js/main.js"></script>
+<script src="js/toastify.js"></script>
+<script src="js/js.cookie.js"></script>
+<script src="js/browserUser.js"></script>
+<script src="js/loggedInUser.js"></script>
+<script src="js/sorting.js"></script>
+<script src="js/filtering.js"></script>
+<script src="js/loaders.js"></script>
+<script src="js/displays.js"></script>
+<script src="js/itemCreation.js"></script>
+<script src="js/filterEventRegistration.js"></script>
+<script src="js/sorterEventRegistration.js"></script>
+<script src="js/manipulations.js"></script>
+<script>
+    $(document).ready(function () {
+        if (!loggedInUser.localAuthn()) window.location.replace("/signin");
+        always()
+        let domain = window.location.hostname
+        let port = domain.toLowerCase() === "localhost" ? ":8080" : ""
+        let url = `${window.location.protocol}//${domain}${port}/user/${loggedInUser.displayName()}`;
+        let $yourLink = $("#yourLink");
+        $yourLink.html(url)
+        $yourLink.attr("href", url)
+    });
+</script>
+</body>
+
+</html>

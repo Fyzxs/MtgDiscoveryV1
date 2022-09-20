@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MTG Discovery</title>
+
+    <!-- --- Common to all pages --- -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/componentFooter.css">
+    <link rel="stylesheet" href="css/componentMenu.css">
+
+    <!--** For This Page --- -->
+
+    <!-- Local -->
+    <style>
+        .termsContent {
+            width: 30%;
+            margin: auto;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<!-- Menu -->
+<div class="menuBox"></div>
+
+<!-- Page Specific -->
+
+<div class="termsContent"><h1>Terms and Conditions</h1>
+    <p>A modified MIT License. TL;DR - I owe you nothing. Ever. For any reason.</p>
+    <p>Use <a href="http://www.wheatonslaw.com/">"Wheaton's Law"</a> : Don't be a dick.</p>
+    <br/>
+    Permission is hereby granted, free of charge, to any person use of this website (mtgdiscovery.com) with no obligations of, or from, the website, owners, or operators.
+
+    THE WEBSITE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE<
+    WEBSITE BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+    WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE WEBSITE OR THE USE OR OTHER DEALINGS IN THE WEBSITE.
+    <br/>
+    <p>Don't hit the server APIs other than use of the website. You want data - Go use <a href="https://mtgjson.com/">MTGJSON</a>.</p>
+</div>
+
+<!-- Footer -->
+<div class="footerBox"></div>
+
+<!-- scripts -->
+<!-- Third Party -->
+<script src="js/jquery.min.js"></script>
+<script src="js/cookie.js"></script>
+<script src="js/String.js"></script>
+<script src="js/toastify.js"></script>
+
+<!-- No Dependencies -->
+<script src="js/env.js"></script>
+<script src="js/base.js"></script>
+<script src="js/css.js"></script>
+<script src="js/templatingCommon.js"></script>
+<script src="js/urlInfo.js"></script>
+<script src="js/paths.js"></script>
+
+<!-- Minimal Dependencies -->
+<script src="js/i18n.js"></script>
+<script src="js/user.js"></script>
+<script src="js/api.js"></script>
+<script src="js/templatingViewControls.js"></script>
+
+<!-- Common to all pages -->
+<script src="js/componentMenu.js"></script>
+<script src="js/componentFooter.js"></script>
+<script src="js/componentSetBox.js"></script>
+
+<!-- --- For This Page --- -->
+
+<!-- Local -->
+<script>
+
+    $(document).ready(async function () {
+        let menu = menuHtml.load("menuBox")
+        let footer = footerHtml.load("footerBox")
+        document.title = i18n.get(i18n.keys.page.title.prefix + urlInfo.path.lastSegment)
+
+        await Promise.all([menu, footer])
+    })
+</script>
+</body>
+</html>

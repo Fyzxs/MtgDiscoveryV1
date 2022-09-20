@@ -1,0 +1,158 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>MTG Single Set</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/toastify.css">
+    <link rel="stylesheet" href="css/keyrune.css"/>
+    <link rel="stylesheet" href="css/cardLoader.css">
+    <link rel="stylesheet" href="css/setLoader.css">
+    <link rel="stylesheet" href="css/manipulators.css">
+
+    <style type="text/css">
+        a, a:visited {
+            color: #a78abc;
+        }
+    </style>
+</head>
+<body>
+<div class="setBoxes"></div>
+<div class="binderLink"></div>
+<div class="collectorInfo"></div>
+<div id="controlBox" class="manipulatorsContainer">
+    <div id="dangerZoneControls"></div>
+    <div id="displayControls"></div>
+    <div id="sortControls" style="display: none;"></div>
+    <div id="filterControls" style="display: none;"></div>
+</div>
+
+<div class="break"></div>
+<div class="cardBoxes">
+    LOADING
+</div>
+<img id="preloading_the_cardback" style="visibility: hidden" src="/img/cardback.jpg" alt=""/>
+
+<script src="js/main.js"></script>
+<script src="js/jquery-3.5.1.js"></script>
+<script src="js/jquery.ba-throttle-debounce.js"></script>
+<script src="js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/bindWithDelay.js"></script>
+<script src="js/toastify.js"></script>
+<script src="js/js.cookie.js"></script>
+<script src="js/browserUser.js"></script>
+<script src="js/loggedInUser.js"></script>
+<script src="js/sorting.js"></script>
+<script src="js/filtering.js"></script>
+<script src="js/loaders.js"></script>
+<script src="js/displays.js"></script>
+<script src="js/itemCreation.js"></script>
+<script src="js/filterEventRegistration.js"></script>
+<script src="js/sorterEventRegistration.js"></script>
+<script src="js/manipulations.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        always()
+
+        globals.cards.selector = ".cardBoxes"
+        globals.manipulations.selector = ".manipulatorsContainer"
+        globals.manipulations.sort.selector = "#sortControls"
+        globals.manipulations.filter.selector = "#filterControls"
+        globals.manipulations.display.selector = "#displayControls"
+        globals.manipulations.dangerZone.selector = "#dangerZoneControls"
+
+        let primarySetCode = browserCode();
+        let setDisplay = singleSetDisplay.newDisplay(primarySetCode, browserUser)
+
+        let cardFilter = cardFilterClosure()
+        let cardDisplay = singleSetCardDisplay.newDisplay(primarySetCode, cardFilter)
+        let cardSortingActions = cardSorterEventRegistration(cardDisplay)
+
+        let config = manipulationsConfiguration(globals.manipulations.sort.defaults)
+        config.displays.incCardSize()
+        config.sort.incAlpha().incCardNumber(true).incCardPrice().showOrder(true)
+
+        let filterConfig = config.filter.incRarity().incTypes().incFoil()
+        if (browserUser.userExists()) {
+            filterConfig.incCount()
+        }
+        filterConfig.incText("Card Name :")
+
+        if (!!browserUser.userId() && !!loggedInUser.localUserId()) {
+            config.dangerZone.incMassActions("Danger Zone")
+        }
+
+        manipulatorHelper(config,
+            (a, b) => cardSortingActions.sorters(a, b),
+            a => filterEventRegistration(cardFilter, cardDisplay).filters(a),
+            a => dangerZoneEventRegistration.register(a),
+            a => displayEventRegistration.register(a)
+        )
+
+        cardDisplay.show()
+        setDisplay.show()
+        loadCollectorInfo()
+        $(".binderLink").html(`<a href="/binder?setCode=${browserCode()}${browserUser.userIdUrlQuery("&")}">View As Binder</a>`)
+    })
+
+    function loadCollectorInfo() {
+        let cards = $(".cardBoxes").children()
+        if (cards.length === 0) {
+            setTimeout(loadCollectorInfo, 1000)
+            return
+        }
+        if (!browserUser.userExists()) return
+
+        let rarityAll = new Map()
+        let rarityHave = new Map()
+        let rarityCost = new Map()
+        $.each(cards, function (index, card) {
+            let $card = $(card)
+            let rarity = $card.data('rarity')
+            let findPrice = $card.find('.cardPrice');
+            let price = 0 < findPrice.length ? parseFloat(findPrice.html().replace("$", "")) : 0
+            let owned = parseInt($card.find('.cardCountSpan ').html())
+            rarityAll.set(rarity, (rarityAll.has(rarity) ? rarityAll.get(rarity) : 0) + 1)
+            if (0 < owned) rarityHave.set(rarity, (rarityHave.has(rarity) ? rarityHave.get(rarity) : 0) + 1)
+            if (0 === owned) rarityCost.set(rarity, (rarityCost.has(rarity) ? rarityCost.get(rarity) : 0) + price)
+        })
+        let collectorInfo = $('.collectorInfo')
+        let totalPrice = 0.00
+        for (let key of ["token", "common", "uncommon", "rare", "mythic", "special"])/*forces order */ {
+            if (!rarityAll.has(key)) continue
+
+            let rarityPrice = (rarityCost.has(key) ? rarityCost.get(key) : 0);
+            let rarityPct = rarityHave.has(key) ? parseInt(rarityHave.get(key)) * 100 / parseInt(rarityAll.get(key)) : 0
+            let raritySplit = (rarityHave.has(key) ? `${rarityHave.get(key)}` : 0) + ` / ${rarityAll.get(key)}`
+            let data = `<div>`
+                + `<div class="collectorInfoRarity">${key}</div>`
+                + `<div class="collectorInfoPercent">`
+                + `<div class="collectorInfoRarityInner">${rarityPct.toFixed(0)}%</div>`
+                + `<div class="collectorInfoRarityInner">${raritySplit}</div>`
+                + `</div>`
+                + `<div class="collectorInfoCost">$${rarityPrice.toFixed(2)}</div>`
+                + `</div>`;
+            totalPrice += rarityPrice
+            collectorInfo.append(data)
+        }
+        collectorInfo.append(`<div><div class="collectorInfoRarity" style="border-style: none">&nbsp;</div><div style="border-style: none" class="collectorInfoPercent">Total</div><div class="collectorInfoCost">$${totalPrice.toFixed(2)}</div></div>`)
+    }
+
+
+</script>
+</body>
+
+</html>

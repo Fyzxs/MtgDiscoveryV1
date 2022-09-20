@@ -1,0 +1,55 @@
+.invisible{
+    visibility: hidden;
+}
+
+body {
+    background-color: black;
+    color: white;
+    font-family: "Noto Sans", sans-serif;
+    margin:0;
+}
+
+.displayInline{
+    display: inline;
+}
+
+a, a:visited {
+    color: #a78abc;
+}
+
+
+a.noVisit {
+    color: white;
+    text-decoration: none;
+}
+
+
+a.noVisit.subtleDisplay {
+    color: #a0a0a0;
+    text-decoration: none;
+}
+
+a.noVisit:visited {
+    color: white;
+}
+
+a.noVisit.subtleDisplay:visited {
+    color: #a0a0a0;
+}
+
+a.noVisit:hover {
+    color: dodgerblue;
+}
+
+a.noVisit:active {
+    color: darkred
+}
+
+
+.itemShown{
+
+}
+
+.itemHidden {
+    display:none!important;
+}

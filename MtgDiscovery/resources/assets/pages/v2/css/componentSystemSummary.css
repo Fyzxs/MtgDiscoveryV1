@@ -1,0 +1,21 @@
+
+.collectionSummary {
+    border: 1px darkgoldenrod solid;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 800px;
+    min-width: 506px;
+    margin: 10px auto;
+    position: relative;
+    text-align: center;
+}
+
+.collectionCount {
+    display: block;
+    font-size: 2em;
+    font-weight: bolder
+}
+
+.collectionCountNoBasic {
+    font-style: italic
+}

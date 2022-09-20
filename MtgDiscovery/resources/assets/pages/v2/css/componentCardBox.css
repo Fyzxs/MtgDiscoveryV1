@@ -1,0 +1,124 @@
+
+.cardBoxFitTwo {
+    display: inline-block;
+    min-width: 45%;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.cardBoxes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 85%;
+    margin: 10px auto;
+    position: relative;
+    text-align: center;
+    padding-bottom: 100px;
+}
+
+.cardBox {
+    display: inline-block;
+    float: left;
+    position: relative;
+    text-align: center;
+    min-width: 285px;
+    min-height: 475px;
+    border: 1px solid lightblue;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    margin: 4px;
+    padding-bottom: 5px;
+}
+
+.cardBox:focus {
+    outline: none;
+    background: darkgreen;
+}
+.cardBox:hover {
+    outline: none;
+    box-shadow: 0 0 25px 0 #b799c3;
+}
+.updateFailed {
+    background-color: darkred !important;
+}
+.updateFailed:focus {
+     background-color: darkred !important;
+ }
+
+.croppedCard {
+    width: 100%;
+    min-width: 274px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #333333;
+    box-sizing: content-box;
+}
+
+.cardBox.cardImageMedium {
+    width: 274px;
+}
+
+.cardImageDiv.cardImageMedium {
+    border-radius: 33px;
+    -moz-border-radius: 33px;
+    -webkit-border-radius: 33px;
+}
+
+.cardImageDiv {
+    min-width: 274px;
+    min-height: 384px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 16px;
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
+    box-sizing: content-box;
+    margin: 5px;
+    background: url("/img/cardback.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.cardImageDiv.foil:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    background: rgb(219, 190, 150);
+    background: -moz-linear-gradient(135deg, rgba(219, 190, 150, 0.20) 0%, rgba(245, 254, 72, 0.40) 20%, rgba(236, 79, 215, 0.27) 38%, rgba(130, 186, 226, 0.40) 52%, rgba(56, 210, 88, 0.27) 64%, rgba(205, 145, 196, 0.40) 80%, rgba(148, 187, 233, 0.27) 100%);
+    background: -webkit-linear-gradient(135deg, rgba(219, 190, 150, 0.20) 0%, rgba(245, 254, 72, 0.40) 20%, rgba(236, 79, 215, 0.27) 38%, rgba(130, 186, 226, 0.40) 52%, rgba(56, 210, 88, 0.27) 64%, rgba(205, 145, 196, 0.40) 80%, rgba(148, 187, 233, 0.27) 100%);
+    background: linear-gradient(135deg, rgba(219, 190, 150, 0.20) 0%, rgba(245, 254, 72, 0.40) 20%, rgba(236, 79, 215, 0.27) 38%, rgba(130, 186, 226, 0.40) 52%, rgba(56, 210, 88, 0.27) 64%, rgba(205, 145, 196, 0.40) 80%, rgba(148, 187, 233, 0.27) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#dbbe96", endColorstr="#94bbe9", GradientType=1);
+}
+
+.cardNameDiv {
+    display: block;
+    padding-top: 5px;
+}
+
+.cardFlipper {
+    position: absolute;
+    bottom: 1.5em;
+    left: .5em;
+    z-index: 1000;
+    border-radius: 12px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+}
+
+.cardFlipper:hover {
+    background: rgba(128, 128, 128, 0.3);
+}
+
+.cardFlipper:active {
+    background: rgba(211, 211, 211, 0.3);
+}
+
+.cardFlipperImg {
+    height: 5em;
+}

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MTG Discovery</title>
+
+    <!-- --- Common to all pages --- -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/componentFooter.css">
+    <link rel="stylesheet" href="css/componentMenu.css">
+
+    <!-- -- 3rd Party -->
+    <link rel="stylesheet" href="css/keyrune.min.css">
+
+    <!--** For This Page --- -->
+    <link rel="stylesheet" href="css/auth.css">
+
+    <!-- Local -->
+    <style>
+    </style>
+</head>
+<body>
+<!-- Menu -->
+<div class="menuBox"></div>
+
+<!-- Page Specific -->
+<div class="loginBox"></div>
+
+<!-- Footer -->
+<div class="footerBox"></div>
+
+<!-- scripts -->
+<!-- Third Party -->
+<script src="js/jquery.min.js"></script>
+<script src="js/cookie.js"></script>
+<script src="js/String.js"></script>
+<script src="js/toastify.js"></script>
+
+<!-- No Dependencies -->
+<script src="js/env.js"></script>
+<script src="js/base.js"></script>
+<script src="js/css.js"></script>
+<script src="js/templatingCommon.js"></script>
+<script src="js/urlInfo.js"></script>
+<script src="js/paths.js"></script>
+
+<!-- Minimal Dependencies -->
+<script src="js/i18n.js"></script>
+<script src="js/user.js"></script>
+<script src="js/api.js"></script>
+<script src="js/templatingViewControls.js"></script>
+
+<!-- Common to all pages -->
+<script src="js/componentMenu.js"></script>
+<script src="js/componentFooter.js"></script>
+<script src="js/componentSetBox.js"></script>
+
+<!-- --- For This Page --- -->
+
+<!-- Local -->
+<script>
+
+    let loginHtml = function () {
+        let html = htmler(`
+<div id="inProgress" class="modal">
+    <div class="modal-content">
+        <span class="modalMessage"><img src="img/preloader.gif" alt="${i18n.get(i18n.keys.auth.login.loaderAlt)}"></span>
+    </div>
+</div>
+
+<div class="container">
+    <h1><span>${i18n.get(i18n.keys.auth.login.signIn)}</span></h1>
+
+    <label for="displayName"><b>${i18n.get(i18n.keys.auth.login.displayNameLabel)}</b></label>
+    <input type="text" placeholder="${i18n.get(i18n.keys.auth.login.displayNamePlaceholder)}" name="displayName" id="displayName" required>
+
+    <label for="psw"><b>${i18n.get(i18n.keys.auth.login.passwordLabel)}</b></label>
+    <input type="password" placeholder="${i18n.get(i18n.keys.auth.login.passwordPlaceholder)}" name="psw" id="psw" required>
+
+    <button id="formSubmission" type="submit" class="registerbtn">${i18n.get(i18n.keys.auth.login.signIn)}</button>
+</div>
+`)
+        return loader(html)
+    }()
+
+    $(document).ready(async function () {
+        let menu = menuHtml.load("menuBox")
+        let footer = footerHtml.load("footerBox")
+        let page = loginHtml.load("loginBox")
+        document.title = i18n.get(i18n.keys.page.title.prefix + urlInfo.path.lastSegment)
+
+        await Promise.all([menu, footer, page])
+
+        function theWork() {
+            let data = {}
+            data.user = {}
+            data.user.displayName = $("#displayName").val()
+            data.user.password = $("#psw").val()
+            if (data.user.password === "" || data.user.displayName === "") {
+                alert(i18n.get(i18n.keys.auth.login.fillInAllFields))
+                return
+            }
+
+            let trigger = $("#inProgress")
+            trigger.show()
+            $.ajax
+            ({
+                type: "POST",
+                url: "/api/v1/users/login",
+                dataType: 'json',
+                data: JSON.stringify(data),
+                success: function (data) {
+                    Cookies.set('token', data.user.token)
+                    Cookies.set('uuid', data.user.uuid)
+                    Cookies.set('displayName', data.user.displayName)
+                    window.location.replace("/" + paths.profile)
+                }
+            })
+                .fail(function (data) {
+                    switch (data.status) {
+                        case 401:
+                            alert(data.responseText)
+                            break;
+                        default:
+                            alert(i18n.get(i18n.keys.auth.login.unknownFailure) + data.status)
+                    }
+                })
+                .always(function () {
+                    setTimeout(function () {
+                        trigger.hide()
+                    }, 250);
+                });
+        }
+
+        $("#formSubmission").click(theWork);
+        $("#psw").keyup(function (e) {
+            if (e.keyCode === 13) {
+                theWork()
+            }
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+.manipulatorsContainer {
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 85%;
+    min-width: 274px;
+    margin: 10px auto;
+    position: relative;
+    text-align: center;
+}
+
+.manipulators {
+
+}
+.manipulatorLabel{
+    cursor: pointer;
+    display: inline-block;
+    background-color: #474646;
+    padding-right:10px;
+    padding-left:5px;
+}
+
+.manipulatorsInner {
+    border: 1px darkgray solid;
+    width: 700px;
+    display: inline-block;
+    padding: 5px;
+    margin: 5px;
+
+}
+
+.manipulatorControlSet {
+    border: 1px grey solid;
+    margin: 0;
+    padding: 10px;
+}
+
+.manipulatorsControls {
+    display: inline-block;
+    width: 95%;
+    margin: 10px;
+}
+
+.manipulatorsLabel {
+    cursor: pointer;
+    display: inline;
+    vertical-align: top;
+    float: left;
+    background-color: #474646;
+    padding-right:10px;
+    padding-left:5px;
+}
+
+.controlItem {
+    display: inline-block;
+}
+
+.toggle input {
+    display: none;
+}
+
+.toggle {
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    height: 30px;
+}
+
+.slider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+.slider::before {
+    content: "";
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+}
+
+.slider, .slider::before {
+    transition: all 0.2s;
+}
+
+.toggle input:checked + .slider::before {
+    left: 50%;
+}
+
+/* Filter toggle settings */
+
+.filterSlider {
+    border: 2px solid #258805;
+    background-color: #8cbc13;
+}
+
+.filterToggle input:checked + .filterSlider {
+    border: 2px solid #b92121;
+    background-color: #5a4141;
+}
+
+.filteredCounts {
+    padding-top: 10px;
+    font-size: xxx-large;
+}
+
+/* Sort toggle settings */
+.sortSlider {
+    border: 2px solid #b92121;
+    background-color: #5a4141;
+}
+
+.sortToggle input:checked + .sortSlider {
+    border: 2px solid #258805;
+    background-color: #8cbc13;
+}
+
+
+/* Danger Zone */
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: rgba(200, 200, 200, 0.3);
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 40px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.modalMessage {
+    font-size: xxx-large;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-top: -4px;
+    line-height: 1.15;
+}
+
+.close:hover,
+.close:focus {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.toggle input {
+    display: none;
+}
+
+.toggle {
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    height: 30px;
+}
+
+.slider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+.slider.sort {
+    border: 2px solid #b92121;
+    background-color: #5a4141;
+}
+
+.slider.filter {
+    border: 2px solid #258805;
+    background-color: #8cbc13;
+}
+
+.slider::before {
+    content: "";
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+}
+
+.slider, .slider::before {
+    transition: all 0.2s;
+}
+
+.toggle.filter input:checked + .slider {
+    border: 2px solid #b92121;
+    background-color: #5a4141;
+}
+
+.toggle.sort input:checked + .slider {
+    border: 2px solid #258805;
+    background-color: #8cbc13;
+}
+
+.toggle input:checked + .slider::before {
+    left: 50%;
+}
+
+.chevron::after {
+    border-style: solid;
+    border-width: 0.25em 0.25em 0 0;
+    content: '';
+    display: inline-block;
+    height: 0.45em;
+    left: .2em;
+    position: relative;
+    top: 0.4em;
+    transform: rotate(-45deg);
+    vertical-align: top;
+    width: 0.45em;
+}
+
+.chevron.right:after {
+    transform: rotate(45deg);
+}
+
+.chevron.down:after {
+    top: .25em;
+    transform: rotate(135deg);
+}

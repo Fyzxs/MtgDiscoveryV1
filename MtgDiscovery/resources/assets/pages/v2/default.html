@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MTG Discovery</title>
+
+    <!-- --- Common to all pages --- -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/componentFooter.css">
+    <link rel="stylesheet" href="css/componentMenu.css">
+
+    <!--** For This Page --- -->
+
+    <!-- Local -->
+    <style>
+        .homeContent {
+            width: 30%;
+            margin: auto;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<div class="menuBox"></div>
+<div class="homeContent" style="text-align: center;width: 100%;">
+    <h1>MTG Discovery</h1>
+    <h2>The place to discover ... stuff... about... Magic:The Gathering...</h2>
+    <br>
+    What do you want from me?!
+    <br>
+    <br>
+    <br>
+    You probably want to know what to do... yeah... Good Question - Click on "<a href="/sets">sets</a>" above, or right there. I made that a link too!.
+</div>
+<div class="footerBox"></div>
+<!-- ---  Common to all pages --- -->
+<!-- Third Party -->
+<script src="js/jquery.min.js"></script>
+<script src="js/cookie.js"></script>
+<script src="js/String.js"></script>
+<script src="js/toastify.js"></script>
+
+<!-- No Dependencies -->
+<script src="js/env.js"></script>
+<script src="js/base.js"></script>
+<script src="js/css.js"></script>
+<script src="js/templatingCommon.js"></script>
+<script src="js/urlInfo.js"></script>
+<script src="js/paths.js"></script>
+
+<!-- Minimal Dependencies -->
+<script src="js/i18n.js"></script>
+<script src="js/user.js"></script>
+
+<!-- Components -->
+<script src="js/componentFooter.js"></script>
+<script src="js/componentMenu.js"></script>
+
+<!-- --- For This Page --- -->
+
+<!-- Local -->
+<script>
+
+    $(document).ready(async function () {
+        let menu = menuHtml.load("menuBox")
+        let footer = footerHtml.load("footerBox")
+        document.title = i18n.get(i18n.keys.page.title.prefix + urlInfo.path.lastSegment)
+
+        await Promise.all([menu, footer])
+    });
+</script>
+</body>
+</html>

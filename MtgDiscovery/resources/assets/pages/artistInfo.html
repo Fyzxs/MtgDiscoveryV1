@@ -1,0 +1,104 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>Artist Info</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/toastify.css">
+    <link rel="stylesheet" href="css/keyrune.css"/>
+    <link rel="stylesheet" href="css/cardLoader.css">
+    <link rel="stylesheet" href="css/setLoader.css">
+    <link rel="stylesheet" href="css/manipulators.css">
+
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+<div id="artistName" class="marqueeName"></div>
+<div id="controlBox" class="manipulatorsContainer">
+    <div id="displayControls"></div>
+    <div id="sortControls" style="display: none;"></div>
+    <div id="filterControls" style="display: none;"></div>
+</div>
+<div class="break"></div>
+<div class="cardBoxes">
+    LOADING
+</div>
+<img id="preloading_the_cardback" style="visibility: hidden" src="/img/cardback.jpg" alt=""/>
+
+
+<script src="js/jquery-3.5.1.js"></script>
+<script src="js/jquery.ba-throttle-debounce.js"></script>
+<script src="js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/bindWithDelay.js"></script>
+<script src="js/main.js"></script>
+<script src="js/toastify.js"></script>
+<script src="js/js.cookie.js"></script>
+<script src="js/browserUser.js"></script>
+<script src="js/loggedInUser.js"></script>
+<script src="js/sorting.js"></script>
+<script src="js/filtering.js"></script>
+<script src="js/loaders.js"></script>
+<script src="js/displays.js"></script>
+<script src="js/itemCreation.js"></script>
+<script src="js/filterEventRegistration.js"></script>
+<script src="js/sorterEventRegistration.js"></script>
+<script src="js/manipulations.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+         always()
+
+        globals.cards.showSet = true
+        globals.cards.showArtist = false
+        globals.cards.selector = ".cardBoxes"
+        globals.manipulations.selector = ".manipulatorsContainer"
+        globals.manipulations.sort.selector = "#sortControls"
+        globals.manipulations.filter.selector = "#filterControls"
+        globals.manipulations.display.selector = "#displayControls"
+
+        let config = manipulationsConfiguration(globals.manipulations.sort.defaults)
+
+        let cardFilter = cardFilterClosure()
+        let cardDisplay = artistCardsDisplay.newDisplay(browserArtist(), cardFilter)
+        let cardSortingActions = cardSorterEventRegistration(cardDisplay)
+
+        config.displays.incCardSize()
+        config.sort.incAlpha(true).incCardSet().showOrder(true)
+        let filterConfig = config.filter.incRarity().incFoil().incText("Card Name :")
+        if(browserUser.userExists()){
+            filterConfig.incCount()
+        }
+        //No Danger Zone
+
+        manipulatorHelper(config,
+            (a, b) => cardSortingActions.sorters(a, b),
+            a => filterEventRegistration(cardFilter, cardDisplay).filters(a),
+            a => dangerZoneEventRegistration.register(a),
+            a => displayEventRegistration.register(a)
+        )
+
+        cardDisplay.show()
+
+        $(".marqueeName").html(browserArtist())
+
+    })
+
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>MTG All Sets</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/toastify.css">
+    <link rel="stylesheet" href="css/keyrune.css"/>
+    <link rel="stylesheet" href="css/cardLoader.css">
+    <link rel="stylesheet" href="css/setLoader.css">
+    <link rel="stylesheet" href="css/manipulators.css">
+    <link rel="stylesheet" href="css/setSummary.css">
+
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+
+<div id="userInfo"></div>
+<div class="collectionSummary"></div>
+<div id="controlBox" class="manipulatorsContainer">
+    <div id="displayControls"></div>
+    <div id="sortControls"></div>
+    <div id="filterControls"></div>
+</div>
+
+<div class="buffer" style="height: 50px"></div>
+<div class="setBoxes">
+    LOADING
+</div>
+
+<script src="js/jquery-3.5.1.js"></script>
+<script src="js/jquery.ba-throttle-debounce.js"></script>
+<script src="js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/bindWithDelay.js"></script>
+<script src="js/main.js"></script>
+<script src="js/toastify.js"></script>
+<script src="js/js.cookie.js"></script>
+<script src="js/browserUser.js"></script>
+<script src="js/loggedInUser.js"></script>
+<script src="js/sorting.js"></script>
+<script src="js/filtering.js"></script>
+<script src="js/loaders.js"></script>
+<script src="js/displays.js"></script>
+<script src="js/itemCreation.js"></script>
+<script src="js/filterEventRegistration.js"></script>
+<script src="js/sorterEventRegistration.js"></script>
+<script src="js/manipulations.js"></script>
+<script>
+    $(document).ready(function () {
+        always()
+
+        globals.manipulations.selector = ".manipulatorsContainer"
+        globals.manipulations.sort.selector = "#sortControls"
+        globals.manipulations.filter.selector = "#filterControls"
+
+        collectionSummaryDisplay.newDisplay().show()
+        let setDisplay = allSetsDisplay.newDisplay()
+        let sortingActions = setSorterEventRegistration(setDisplay)
+
+        /* Manipulator Stuff */
+        let config = manipulationsConfiguration(globals.manipulations.sort.defaults)
+        let sortConfig = config.sort.incAlpha().incRelease(true).incSetSize().showOrder()
+        let filterConfig = config.filter
+        if(browserUser.userExists()){
+            sortConfig.incSetPercent()
+            sortConfig.incCardsCollected()
+            filterConfig.incCollected()
+        }
+        filterConfig.incText("Name / SetCode :")
+
+        manipulatorHelper(config,
+            (a, b) => sortingActions.sorters(a, b),
+            a => filterEventRegistration(setFilterClosure, setDisplay).filters(a)
+            , function (){}
+            , function (){})
+
+        setDisplay.show()
+
+    })
+</script>
+</body>
+
+</html>

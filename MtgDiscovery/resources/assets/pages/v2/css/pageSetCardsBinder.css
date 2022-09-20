@@ -1,0 +1,26 @@
+
+.curPage {
+    background-color: rgb(131, 205, 118) !important;
+}
+
+.binderPageButton {
+    width: 40px;
+    height: 30px;
+    margin: 1px;
+}
+
+a, a:visited {
+    color: #a78abc;
+}
+
+.unownedCard {
+    opacity: 0.4;
+}
+
+.cardBox:hover .unownedCard {
+    opacity: 0.8;
+}
+
+.cardBox:focus .unownedCard {
+    opacity: 0.9;
+}

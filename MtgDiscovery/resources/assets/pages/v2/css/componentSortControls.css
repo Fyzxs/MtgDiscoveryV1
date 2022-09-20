@@ -1,0 +1,12 @@
+
+
+/* Sort toggle settings */
+.sortSlider {
+    border: 2px solid #b92121;
+    background-color: #5a4141;
+}
+
+.sortToggle input:checked + .sortSlider {
+    border: 2px solid #258805;
+    background-color: #8cbc13;
+}

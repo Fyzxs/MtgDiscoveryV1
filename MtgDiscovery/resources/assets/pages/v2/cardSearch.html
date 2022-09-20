@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MTG Discovery</title>
+
+    <!-- --- Common to all pages --- -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/componentFooter.css">
+    <link rel="stylesheet" href="css/componentMenu.css">
+
+    <!-- -- 3rd Party -->
+    <link rel="stylesheet" href="css/keyrune.min.css">
+    <link rel="stylesheet" href="css/toastify.css">
+
+    <!-- --- For This Page --- -->
+    <link rel="stylesheet" href="css/componentSetBox.css">
+    <link rel="stylesheet" href="css/componentDangerZone.css">
+    <link rel="stylesheet" href="css/componentSortControls.css">
+    <link rel="stylesheet" href="css/componentFilterControls.css">
+    <link rel="stylesheet" href="css/componentViewControl.css">
+    <link rel="stylesheet" href="css/componentSystemSummary.css">
+    <link rel="stylesheet" href="css/componentCardBox.css">
+    <link rel="stylesheet" href="css/progressBar.css">
+    <link rel="stylesheet" href="css/componentCollector.css">
+    <!-- Local -->
+    <style>
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            margin-left: 10px;
+            margin-top: -4px;
+            line-height: 1.15;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: red;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<!-- Menu -->
+<div class="menuBox"></div>
+
+<!-- Page Specific -->
+<div class="manipulatorsContainer">
+<div><label for="textFilter">Card Name Starts With : </label><input placeholder="starts with" class="textItemFilter" id="textFilter" type="text"></div>
+</div>
+<div class="controlBox"></div>
+<div class="outerBox"></div>
+<!-- Footer -->
+<div class="footerBox"></div>
+
+<!-- scripts -->
+<!-- Third Party -->
+<script src="js/jquery.min.js"></script>
+<script src="js/cookie.js"></script>
+<script src="js/String.js"></script>
+<script src="js/toastify.js"></script>
+
+<!-- No Dependencies -->
+<script src="js/env.js"></script>
+<script src="js/base.js"></script>
+<script src="js/css.js"></script>
+<script src="js/templatingCommon.js"></script>
+<script src="js/urlInfo.js"></script>
+<script src="js/paths.js"></script>
+
+<!-- Minimal Dependencies -->
+<script src="js/i18n.js"></script>
+<script src="js/user.js"></script>
+<script src="js/api.js"></script>
+<script src="js/templatingViewControls.js"></script>
+
+<!-- Common to all pages -->
+<script src="js/componentMenu.js"></script>
+<script src="js/componentFooter.js"></script>
+<script src="js/componentSetBox.js"></script>
+
+<!-- --- For This Page --- -->
+<script src="js/componentSummary.js"></script>
+<script src="js/componentDangerZone.js"></script>
+<script src="js/componentSortControls.js"></script>
+<script src="js/componentFilterControls.js"></script>
+<script src="js/componentViewControls.js"></script>
+<script src="js/componentCardBox.js"></script>
+<script src="js/eventsCardBox.js"></script>
+<script src="js/componentCollector.js"></script>
+
+<!-- --- For This Page --- -->
+
+<!-- Local -->
+<script>
+
+    let cardSearchHtml = (function () {
+        function html(text, replaceMe, callback) {
+            api.data.cardSearch(text).then(function({value, err}){
+                if (err !== undefined) return emptyHtml
+                loader(htmler(`<div class="cardBoxes">${generateAll(...(value.map((s) => cardBoxInnerHtml(s).all()))).html()}</div>`)).load(replaceMe, {onSuccess:callback}).then(function(){
+                });
+            })
+        }
+        return {
+            load: html
+        }
+    })()
+
+    $(document).ready(async function () {
+        let menu = menuHtml.load("menuBox")
+        let footer = footerHtml.load("footerBox")
+        document.title = i18n.get(i18n.keys.page.title.prefix + urlInfo.path.lastSegment)
+
+
+        //TODO: Sort Release Date for cards
+        cardControlsHtml.initSort().incAlpha(true).incCardNumber().incCardPrice()
+        //TODO: Filter Foils for cards
+        cardControlsHtml.initFilter().incCardCount().incRarity()
+        let controls = cardControlsHtml.load("controlBox")
+
+        function postLoad(){
+            cardControlsHtml.apply()
+            $(`.cardBox `).off()
+            cardBoxEvents()
+        }
+
+        registerTextFilterEvents(() =>{
+            let $outerBox = $(".outerBox");
+            $outerBox.empty()
+            $outerBox.append(`<div class='replacementBox'><div style="margin: 15% auto;width: 10%;justify-content: center;display: grid;"><img src="/img/preloader.gif"></div></div>` )
+            cardSearchHtml.load($("#textFilter").val(),"replacementBox", postLoad)
+
+        })
+
+        await Promise.all([menu, footer, controls])
+    })
+
+    function registerTextFilterEvents(filterCallback) {
+        let $textFilter = $(`#textFilter`);
+        $textFilter.on('input propertychange paste', debounce(function (e) {
+            if($textFilter.val() === "") return
+            filterCallback()
+        }, 250))
+
+        function clearTextField() {
+            $textFilter.focus()
+            $textFilter.val("")
+        }
+
+        let keyCount = 0
+        $(document).keyup(function (event) {
+            if (event.key !== 'Shift') return
+            keyCount++
+            setTimeout(function () {
+                if (keyCount === 2) clearTextField()
+                keyCount = 0
+            }, 250)
+        })
+    }
+</script>
+</body>
+</html>

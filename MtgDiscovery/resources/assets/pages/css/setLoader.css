@@ -1,0 +1,214 @@
+.setBox {
+    display: inline-block;
+    float: left;
+    position: relative;
+    text-align: center;
+    width: 285px;
+    height: 350px;
+    border: 1px solid lightblue;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    margin: 4px;
+}
+
+
+a.noVisit {
+    color: white;
+    text-decoration: none;
+}
+
+.subtleDisplay {
+    color: #a0a0a0;
+}
+
+a.noVisit.subtleDisplay {
+    color: #a0a0a0;
+    text-decoration: none;
+}
+
+a.noVisit.subtleDisplay:visited {
+    color: #a0a0a0;
+}
+
+a.noVisit:visited {
+    color: white;
+}
+
+a.noVisit:hover {
+    color: dodgerblue;
+}
+
+a.noVisit:active {
+    color: darkred
+}
+
+.setName {
+    color: lightseagreen;
+    line-height: 1.5em;
+    height: 3em;
+    overflow: hidden;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px
+}
+
+.parentLink {
+    color: lightseagreen;
+}
+
+.setBox:focus {
+    outline: none;
+    background: darkgreen;
+    border-color: darkslategrey;
+    border-radius: 12px;
+    -moz-border-radius: 12px;
+    -webkit-border-radius: 12px;
+}
+
+
+.setBoxes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 70%;
+    margin: 10px auto;
+    position: relative;
+    text-align: center;
+}
+
+.binderLink {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 70%;
+    margin: 10px auto;
+    position: relative;
+    text-align: center;
+}
+
+.collectorInfo {
+    display: block;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 15%;
+    margin: 10px auto;
+    position: relative;
+    text-align: left;
+}
+
+.collectorInfoRarity {
+    display: inline-block;
+    width: 28%;
+    text-align: right;
+    border-bottom: #73a5ff;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.collectorInfoPercent {
+    display: inline-block;
+    width: 48%;
+    text-align: right;
+    border-bottom: #73a5ff;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.collectorInfoCost {
+    display: inline-block;
+    width: 24%;
+    text-align: right;
+    border-bottom: #73a5ff;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.collectorInfoRarityInner {
+    display: inline-block;
+    width: 50%;
+    justify-content: right;
+}
+
+.progress {
+    position: relative;
+    margin-bottom: 0;
+}
+
+.progress-bar-success {
+    background-color: #5cb85c;
+}
+
+.progress-bar {
+    float: left;
+    width: 0;
+    font-size: 12px;
+    height: 20px;
+    color: #fff;
+    text-align: center;
+    background-color: #00ae00;
+    -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
+    -webkit-transition: width .6s ease;
+    -o-transition: width .6s ease;
+    transition: width .6s ease;
+}
+
+.progress-bar-danger {
+    background-color: #d9534f;
+}
+
+.progress span {
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: black;
+    font-weight: bold;
+}
+
+.setSymbol {
+    width: 124px;
+    height: 96px;
+    filter: invert(1);
+}
+
+.setType {
+    border-radius: 0 15px 0 15px;
+    padding: 0 10px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.setType.core {
+    background-color: #19246e;
+}
+
+.setType.expansion {
+    background-color: #2319a9;
+}
+
+.setType.promo {
+    background-color: darkgoldenrod;
+}
+
+.setType.funny {
+    background-color: #eeff00;
+    color: #1A1718;
+}
+
+.setType.memorabilia {
+    background-color: #a400c1;
+}
+
+.setType.duel_deck {
+    background: rgb(219, 190, 150);
+    background: -moz-linear-gradient(90deg, rgb(219, 0, 0) 20%, rgb(0, 255, 0) 100%);
+    background: -webkit-linear-gradient(90deg, rgb(219, 0, 0) 20%, rgb(0, 255, 0) 100%);
+    background: linear-gradient(90deg, rgb(219, 0, 0) 20%, rgb(0, 255, 0) 100%);
+}
+
+.setType.token {
+    background-color: darkgray;
+    color: lightgray;
+}
